@@ -1,15 +1,8 @@
-#LD STAGE ----
-FROM node:18-alpine AS builder
-WORKDIR /app
+##e the official Nginx image as a base
+FROM nginx:latest
 
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
+# Copy your static files to the Nginx HTML directory
+COPY ./  /usr/share/nginx/html
 
-# ---- PRODUCTION STAGE ----
-FROM nginx:alpine
-
+# Optionally expose the port
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
-
